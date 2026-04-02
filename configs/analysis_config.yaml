@@ -1,0 +1,83 @@
+# Tissue Fluidity scRNA-seq Analysis Configuration
+# =================================================
+
+project:
+  name: "Tissue Fluidity in Wound Healing"
+  pi: "Rahul M Sarate"
+  organism: "Mus musculus"
+  genome_build: "GRCm39 (mm39)"
+  annotation: "GENCODE vM33"
+
+experimental_design:
+  conditions:
+    - control       # Homeostatic skin
+    - wound_3d      # Inflammatory phase
+    - wound_7d      # Proliferative phase
+    - wound_14d     # Remodeling phase
+  replicates_per_condition: 2
+  total_samples: 8
+  library_type: "10X Chromium v3 (3' gene expression)"
+  sequencing: "Illumina NovaSeq 6000, 28+90 bp paired-end"
+
+qc_thresholds:
+  min_genes_per_cell: 200
+  max_genes_per_cell: 5000
+  min_counts_per_cell: 500
+  max_percent_mt: 15  # Higher threshold for skin (keratinocytes high mt)
+  min_cells_per_gene: 3
+  doublet_rate: 0.05  # ~5% expected for 10X
+
+normalization:
+  method: "SCTransform"  # Alternative: "LogNormalize"
+  regress_vars: ["percent.mt"]
+  n_variable_features: 3000
+
+integration:
+  method: "Harmony"  # Alternative: "RPCA", "scVI"
+  group_by: "sample"
+  dims: 30
+  
+clustering:
+  algorithm: "Leiden"
+  resolutions: [0.4, 0.6, 0.8, 1.0]
+  default_resolution: 0.8
+  n_neighbors: 15
+  n_pcs: 30
+
+differential_expression:
+  method: "pseudobulk_DESeq2"  # Gold standard for scRNA-seq
+  alternative: "MAST"
+  significance:
+    padj_threshold: 0.05
+    log2fc_threshold: 1.0
+  shrinkage: "ashr"
+
+tissue_fluidity_signatures:
+  EMT:
+    genes: [Vim, Cdh1, Cdh2, Snai1, Snai2, Twist1, Zeb1, Zeb2]
+  ECM_remodeling:
+    genes: [Fn1, Col1a1, Col3a1, Mmp2, Mmp9, Mmp14, Timp1, Lox, Loxl2]
+  Cell_migration:
+    genes: [Rac1, Cdc42, RhoA, Itgb1, Itga6, Cxcl12, Cxcr4]
+  Mechanotransduction:
+    genes: [Yap1, Wwtr1, Piezo1, Trpv4, Lats1, Lats2]
+  Wound_signals:
+    genes: [Tgfb1, Tgfb2, Tgfb3, Pdgfa, Pdgfb, Fgf2, Vegfa, Wnt5a]
+
+cell_type_markers:
+  Basal_Keratinocyte: [Krt14, Krt5, Tp63, Itga6]
+  Diff_Keratinocyte: [Krt10, Krt1, Ivl, Lor]
+  Fibroblast: [Col1a1, Col3a1, Dcn, Pdgfra]
+  Myofibroblast: [Acta2, Tagln, Cnn1, Postn]
+  Macrophage: [Cd68, Adgre1, Csf1r, Mrc1]
+  Neutrophil: [S100a8, S100a9, Ly6g]
+  T_Cell: [Cd3d, Cd3e, Cd4, Cd8a]
+  Endothelial: [Pecam1, Cdh5, Kdr]
+  Hair_Follicle_SC: [Sox9, Lgr5, Cd34, Lhx2]
+  Melanocyte: [Dct, Tyrp1, Pmel, Mitf]
+
+output:
+  figures_dpi: 300
+  figure_format: ["png", "pdf"]
+  color_palette: "okabe_ito"  # Colorblind-safe
+  seed: 42

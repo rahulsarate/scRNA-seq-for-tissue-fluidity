@@ -1,0 +1,12 @@
+# Sample Sheet Template
+# Project: Tissue Fluidity in Wound Healing (Sarate Lab)
+# Usage: Fill in with your actual sample information
+sample_id,condition,timepoint,replicate,sex,age_weeks,organism,strain,tissue,library_prep,sequencing_platform,fastq_r1,fastq_r2,n_cells_expected
+ctrl_rep1,control,day0,1,male,10,Mus musculus,C57BL/6J,dorsal_skin,10X_Chromium_v3,NovaSeq_6000,data/raw/ctrl_rep1_S1_L001_R1_001.fastq.gz,data/raw/ctrl_rep1_S1_L001_R2_001.fastq.gz,5000
+ctrl_rep2,control,day0,2,male,10,Mus musculus,C57BL/6J,dorsal_skin,10X_Chromium_v3,NovaSeq_6000,data/raw/ctrl_rep2_S2_L001_R1_001.fastq.gz,data/raw/ctrl_rep2_S2_L001_R2_001.fastq.gz,5000
+wound3d_rep1,wound_3d,day3,1,male,10,Mus musculus,C57BL/6J,wound_bed,10X_Chromium_v3,NovaSeq_6000,data/raw/wound3d_rep1_S3_L001_R1_001.fastq.gz,data/raw/wound3d_rep1_S3_L001_R2_001.fastq.gz,5000
+wound3d_rep2,wound_3d,day3,2,male,10,Mus musculus,C57BL/6J,wound_bed,10X_Chromium_v3,NovaSeq_6000,data/raw/wound3d_rep2_S4_L001_R1_001.fastq.gz,data/raw/wound3d_rep2_S4_L001_R2_001.fastq.gz,5000
+wound7d_rep1,wound_7d,day7,1,male,10,Mus musculus,C57BL/6J,wound_bed,10X_Chromium_v3,NovaSeq_6000,data/raw/wound7d_rep1_S5_L001_R1_001.fastq.gz,data/raw/wound7d_rep1_S5_L001_R2_001.fastq.gz,5000
+wound7d_rep2,wound_7d,day7,2,male,10,Mus musculus,C57BL/6J,wound_bed,10X_Chromium_v3,NovaSeq_6000,data/raw/wound7d_rep2_S6_L001_R1_001.fastq.gz,data/raw/wound7d_rep2_S6_L001_R2_001.fastq.gz,5000
+wound14d_rep1,wound_14d,day14,1,male,10,Mus musculus,C57BL/6J,wound_bed,10X_Chromium_v3,NovaSeq_6000,data/raw/wound14d_rep1_S7_L001_R1_001.fastq.gz,data/raw/wound14d_rep1_S7_L001_R2_001.fastq.gz,5000
+wound14d_rep2,wound_14d,day14,2,male,10,Mus musculus,C57BL/6J,wound_bed,10X_Chromium_v3,NovaSeq_6000,data/raw/wound14d_rep2_S8_L001_R1_001.fastq.gz,data/raw/wound14d_rep2_S8_L001_R2_001.fastq.gz,5000

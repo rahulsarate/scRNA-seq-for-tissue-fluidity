@@ -1,0 +1,64 @@
+{
+  "project": "Tissue Fluidity in Wound Healing — scRNA-seq",
+  "pi": "Rahul M Sarate",
+  "created": "2026-04-02",
+  "status": "initialized",
+  "current_step": "data_generation",
+  "pipelines": {
+    "synthetic_data": {
+      "status": "ready",
+      "scripts": [
+        "scripts/python/generate_synthetic_data.py",
+        "scripts/R/generate_synthetic_seurat.R"
+      ]
+    },
+    "analysis_pipeline": {
+      "status": "ready",
+      "scripts": [
+        "scripts/python/01_scrna_analysis_pipeline.py",
+        "scripts/R/01_seurat_analysis.R"
+      ]
+    },
+    "visualization": {
+      "status": "ready",
+      "scripts": [
+        "scripts/python/02_visualization_suite.py"
+      ]
+    },
+    "data_download": {
+      "status": "ready",
+      "scripts": [
+        "scripts/python/00_download_geo_data.py"
+      ]
+    }
+  },
+  "agents_configured": [
+    "orchestrator",
+    "qc-analyst",
+    "scrna-analyst",
+    "de-analyst",
+    "pathway-explorer",
+    "visualization-specialist",
+    "data-wrangler",
+    "pipeline-builder",
+    "report-writer",
+    "reviewer"
+  ],
+  "datasets": {
+    "synthetic": {
+      "cells": 8000,
+      "genes": 2000,
+      "conditions": ["control", "wound_3d", "wound_7d", "wound_14d"],
+      "cell_types": 10
+    },
+    "real_candidates": [
+      "GSE234269",
+      "GSE159827",
+      "GSE188432",
+      "GSE203244",
+      "GSE186821",
+      "GSE197588",
+      "GSE270438"
+    ]
+  }
+}

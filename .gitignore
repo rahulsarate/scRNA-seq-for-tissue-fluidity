@@ -1,0 +1,57 @@
+# scRNA-seq Wound Healing Project — .gitignore
+# =============================================
+
+# --- Large data files (never commit) ---
+data/raw/**/*.fastq.gz
+data/raw/**/*.fastq
+data/raw/**/*.bam
+data/raw/**/*.sam
+data/raw/**/*.cram
+data/trimmed/
+data/aligned/
+data/counts/**/*.h5
+data/counts/**/*.h5ad
+data/references/*.fa
+data/references/*.fasta
+data/references/*.gtf
+
+# --- Analysis outputs (regenerable) ---
+analysis/figures/*.png
+analysis/figures/*.pdf
+analysis/clustering/*.h5ad
+analysis/clustering/*.rds
+data/synthetic/*.h5ad
+data/synthetic/*.csv
+data/synthetic/*.rds
+
+# --- R artifacts ---
+.Rhistory
+.Rdata
+.RData
+*.Rproj.user/
+
+# --- Python artifacts ---
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# --- Environment ---
+.env
+.venv/
+env/
+
+# --- IDE ---
+.vscode/settings.json
+.idea/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs (keep structure, ignore contents) ---
+logs/sessions/*.json
+logs/pipeline_runs/*.log
+logs/slurm/*.out
+logs/slurm/*.err

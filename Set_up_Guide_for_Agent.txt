@@ -1,0 +1,425 @@
+part 1
+"scientist-agent-setup-guide.md Write the FIRST HALF of a comprehensive AI Agent Setup Guide for an RNA Sequencing Scientist. This scientist is NOT a structural engineer — they work with genomics data (FASTQ, BAM, CSV, RDS files), use R/Bioconductor and Python for analysis.
+
+Write EXACTLY the following sections (Sections 0 through 6). Make it comprehensive, practical, and production-ready.
+
+AI Agent Setup Guide for RNA Sequencing Scientists
+For: RNA-seq Bioinformatician / Genomics Researcher Created: 2026-04-02 Last Updated: 2026-04-02
+Version: 1.0
+
+What this is: A complete blueprint for setting up AI coding agents (GitHub Copilot, Claude, Aider, etc.) tailored to RNA-seq analysis workflows. Covers agent definitions, skills, pipelines, R/Python references, parallel workflows, and 25 ready-to-use prompts.
+
+Table of Contents
+Data Security & Compliance
+Overview & Why Agents for RNA-seq
+Your Bioinformatics Tool Ecosystem
+Recommended Agents (12 Agents)
+Agent Skills (10 Skills)
+Pipeline Definitions
+Workflow Patterns (Decision Tree)
+Section 0: Data Security & Compliance
+Cover these thoroughly:
+
+Golden Rule: NEVER send patient/clinical/PHI data to external LLMs
+HIPAA/GDPR/IRB compliance considerations
+Safe vs unsafe AI usage tables (like the STA guide)
+3 tiers: Fully Offline, IT-Approved Local LLM, IT-Approved Cloud
+What CAN safely use AI for (writing R scripts, generic pipeline templates, learning syntax, regex help, plotting code)
+What NOT safe (pasting patient IDs, clinical metadata, raw sequence data with identifiers, unpublished results)
+Offline-first agent model diagram
+Software installation on institutional servers (conda, mamba, Bioconductor)
+Section 1: Overview & Why Agents
+Cover:
+
+What agents are for a bioinformatics context
+Time savings table with real RNA-seq tasks: | Task | Manual | With Agents | Savings | Examples: Parse DESeq2 results (45min→5min), Write Snakemake pipeline (2hr→15min), Generate volcano+MA+PCA plots (1hr→10min), Debug alignment errors (1hr→15min), Write methods section (30min→5min), QC report interpretation (20min→3min)
+Section 2: Bioinformatics Tool Ecosystem
+Primary Analysis Tools
+Cover these in a table:
+
+STAR / HISAT2 / Salmon / kallisto (alignment/quantification)
+samtools / picard (BAM manipulation)
+featureCounts / HTSeq (read counting)
+FastQC / MultiQC / Trim Galore / fastp (QC & trimming)
+DESeq2 / edgeR / limma-voom (differential expression)
+clusterProfiler / fgsea / GSEA (pathway enrichment)
+Seurat / Scanpy (single-cell, if applicable)
+IGV (genome browser)
+Scripting Languages
+R / Bioconductor (primary for DE analysis)
+Python (scanpy, pandas, matplotlib, seaborn)
+Bash (pipeline glue, HPC job submission)
+Nextflow / Snakemake (workflow managers)
+Key File Formats
+Table with: FASTQ, BAM/SAM, BED, GTF/GFF3, VCF, CSV/TSV, RDS/RData, h5ad/h5, counts matrix, FPKM/TPM tables, DESeq2 results, enrichment results
+
+Section 3: 12 Recommended Agents
+Define each agent with this template:
+
+### 3.X `agent-name`
+| Property | Value |
+|----------|-------|
+| Permission | ... |
+| Tools | ... |
+| Key bio tools | ... |
+
+**Responsibilities:**
+- 5-10 bullet points
+
+**Key Commands:**
+- Code examples (R, Python, Bash)
+
+**Example prompt:**
+> "Natural language example"
+The 12 agents:
+
+orchestrator — Plan, triage, delegate; entry point for every task; ReadOnly
+qc-analyst — Quality control: FastQC, MultiQC, trimming, contamination check; WorkspaceWrite
+alignment-specialist — Read alignment/pseudoalignment: STAR, HISAT2, Salmon, kallisto; WorkspaceWrite
+quantification-expert — Gene/transcript counting: featureCounts, Salmon quant, tximport; WorkspaceWrite
+de-analyst — Differential expression: DESeq2, edgeR, limma-voom, design matrices, contrasts; WorkspaceWrite
+pathway-explorer — GO enrichment, KEGG, GSEA, clusterProfiler, Reactome; WorkspaceWrite
+visualization-specialist — Volcano plots, MA plots, PCA, heatmaps, ggplot2, ComplexHeatmap, EnhancedVolcano; WorkspaceWrite
+r-developer — R/Bioconductor scripting, package management, Rmarkdown; WorkspaceWrite
+pipeline-builder — Nextflow/Snakemake workflows, containerization, Conda environments; WorkspaceWrite
+data-wrangler — Data import/parsing (CSV, RDS, h5ad), metadata management, sample sheets; WorkspaceWrite
+report-writer — Methods sections, figure legends, Rmarkdown/Quarto reports, reproducibility; WorkspaceWrite
+reviewer — Code review, statistical methods review, reproducibility check; ReadOnly
+Make each agent section comprehensive with real R/Python/Bash commands.
+
+Section 4: 10 Agent Skills
+Define each skill with: When to invoke, Workflow steps, Implementation examples.
+
+Skills:
+
+fastqc-pipeline — Run FastQC + MultiQC + trimming + recheck; 6 steps
+alignment-workflow — Full STAR/Salmon alignment with index building; 7 steps
+deseq2-analysis — Complete DESeq2 pipeline from counts to results; 8 steps
+enrichment-analysis — GO/KEGG/GSEA from DE gene list; 6 steps
+rnaseq-visualization — Standard plot suite (volcano, MA, PCA, heatmap); 5 steps
+data-import — Parse CSV/RDS/h5ad/counts files into analysis-ready format; 4 steps
+sample-metadata — Create/validate sample sheets and design matrices; 5 steps
+batch-correction — Detect and correct batch effects (SVA, ComBat, RUVSeq); 6 steps
+reproducibility-check — Version tracking, seed setting, environment export; 5 steps
+methods-section — Auto-generate methods text from analysis parameters; 4 steps
+Include real R and Python code examples in each skill.
+
+Section 5: Pipeline Definitions
+Define 4 pipelines with ASCII flow diagrams, step tables (agent, entry criteria, exit criteria), and quality gates:
+
+Standard Bulk RNA-seq Pipeline (10 steps) Raw FASTQ → QC → Trim → Align → Count → Normalize → DE → Pathway → Viz → Report
+
+Quick DE Pipeline (5 steps) — When you already have count matrices Import Counts → Sample Sheet → DESeq2 → Pathway + Viz → Report
+
+Multi-condition Comparison Pipeline (8 steps) Design Matrix → Pairwise Contrasts → DE per contrast → Overlap Analysis → Shared Pathways → Viz → Report
+
+Single-cell RNA-seq Pipeline (9 steps) — Optional/advanced FASTQ → Cell Ranger/STARsolo → QC + Filtering → Normalization → Clustering → Markers → Cell Type → Viz → Report
+
+Section 6: Workflow Patterns (Decision Tree)
+Massive routing table: 20+ task types → agent mapping with keywords.
+
+Examples:
+
+"Run QC on new FASTQ files" → qc-analyst + /fastqc-pipeline
+"Align reads to GRCh38" → alignment-specialist + /alignment-workflow
+"Find differentially expressed genes" → de-analyst + /deseq2-analysis
+"What pathways are enriched?" → pathway-explorer + /enrichment-analysis
+"Make a volcano plot" → visualization-specialist + /rnaseq-visualization
+"Import my .rds count matrix" → data-wrangler + /data-import
+"Build Nextflow pipeline for 50 samples" → pipeline-builder
+"Write methods section for paper" → report-writer + /methods-section
+"Check batch effects" → data-wrangler + /batch-correction
+"Review my DESeq2 code" → reviewer
+Include keyword patterns for auto-routing.
+
+IMPORTANT WRITING GUIDELINES:
+
+This is for a SCIENTIST who is NOT a software engineer — keep language accessible
+Include REAL tool commands (not placeholders)
+Include REAL R code examples (library(), DESeq2, ggplot2)
+Include REAL Python code examples (scanpy, pandas)
+Include REAL bash commands (STAR, samtools, FastQC)
+Make it comprehensive (each section should be thorough)
+Use tables, code blocks, bullet points extensively
+Add ❌/✅ for dos/don'ts
+Add > blockquotes for notes and warnings
+Total target: ~2000-3000 lines for this first half
+Write the COMPLETE content for all 7 sections (0-6). Do not use placeholders or ".."
+
+guide-part2.md Write the SECOND HALF of a comprehensive AI Agent Setup Guide for an RNA Sequencing Scientist. This continues from Sections 0-6 which are already written. Write Sections 7 through 18 plus Appendices.
+
+This scientist is NOT a structural engineer — they work with genomics data (FASTQ, BAM, CSV, RDS files), use R/Bioconductor and Python for analysis.
+
+Write EXACTLY these sections:
+
+Section 7: Directory Structure
+Recommended workspace layout for RNA-seq projects:
+
+~/rnaseq_workspace/
+├── .agent_config/              # Agent & skill definitions
+│   ├── agents/                 # One .md per agent
+│   ├── skills/                 # One folder per skill
+│   └── pipelines/              # JSON pipeline state files
+├── data/
+│   ├── raw/                    # Raw FASTQ files (READ-ONLY, never modify)
+│   ├── trimmed/                # Trimmed FASTQ output
+│   ├── aligned/                # BAM/SAM files
+│   ├── counts/                 # Count matrices (CSV, RDS)
+│   ├── references/             # Genome FASTA, GTF, indices
+│   └── metadata/               # Sample sheets, clinical data
+├── analysis/
+│   ├── qc/                     # FastQC, MultiQC reports
+│   ├── de/                     # DESeq2/edgeR results
+│   ├── enrichment/             # GO/KEGG/GSEA results
+│   └── figures/                # Generated plots (PDF, PNG)
+├── scripts/
+│   ├── R/                      # R analysis scripts
+│   ├── python/                 # Python analysis scripts
+│   ├── bash/                   # Shell scripts (alignment, job submission)
+│   ├── pipelines/              # Nextflow/Snakemake workflows
+│   └── utils/                  # Helper scripts (parsers, converters)
+├── reports/                    # Rmarkdown/Quarto reports
+├── docs/                       # Project documentation
+│   ├── methods/                # Methods text for publications
+│   ├── protocols/              # Lab protocols referenced
+│   └── meeting-notes/          # PI meeting notes
+├── configs/                    # Tool configuration files
+│   ├── star_params.yaml        # STAR alignment parameters
+│   ├── deseq2_config.yaml      # DESeq2 design/contrast definitions
+│   └── conda_envs/             # Environment YAML files
+├── logs/
+│   ├── sessions/               # Agent session logs (JSON)
+│   ├── pipeline_runs/          # Pipeline execution logs
+│   └── slurm/                  # HPC job logs
+└── templates/                  # Starting-point templates (read-only)
+    ├── sample_sheet_template.csv
+    ├── deseq2_template.R
+    ├── volcano_template.R
+    └── methods_template.md
+Explain each directory's purpose, read/write policies, version control strategy.
+
+Section 8: Common R & Python Patterns Reference
+8.1 R / Bioconductor Reference (~150 lines)
+Essential R patterns for RNA-seq:
+
+Loading libraries (DESeq2, edgeR, clusterProfiler, ggplot2, pheatmap, EnhancedVolcano)
+Reading data (read.csv, readRDS, tximport)
+DESeq2 workflow (DESeqDataSetFromMatrix, DESeq, results, lfcShrink)
+edgeR workflow (DGEList, calcNormFactors, estimateDisp, glmQLFit, topTags)
+Visualization (plotPCA, plotMA, EnhancedVolcano, pheatmap, ComplexHeatmap)
+Saving results (write.csv, saveRDS)
+Enrichment (enrichGO, enrichKEGG, gseGO, dotplot, cnetplot)
+8.2 Python / Scanpy Reference (~100 lines)
+Essential Python patterns:
+
+pandas for count matrices
+scanpy for single-cell (read_h5ad, pp.filter_cells, tl.pca, tl.leiden, pl.umap)
+matplotlib/seaborn for plots
+pydeseq2 (if using Python-native DE)
+gseapy for enrichment
+8.3 Bash / CLI Reference (~100 lines)
+Essential CLI tools:
+
+FastQC, MultiQC, Trim Galore, fastp
+STAR (genomeGenerate, alignment)
+samtools (sort, index, flagstat, idxstats)
+featureCounts
+Salmon (index, quant)
+conda/mamba environment management
+All with REAL, working command examples (not placeholders).
+
+Section 9: Parallel Workflow Patterns
+4 types of parallelism for RNA-seq:
+
+Sample-parallel — Process N samples through QC/alignment simultaneously
+
+Bash loop + SLURM/LSF array jobs
+Nextflow/Snakemake auto-parallelization
+Example: STAR alignment of 48 samples across 48 cores
+Analysis-parallel — Run DESeq2 and edgeR simultaneously for cross-validation
+
+R parallel::mclapply for pairwise contrasts
+Run GO enrichment + KEGG enrichment + GSEA in parallel
+Contrast-parallel — Multiple pairwise comparisons simultaneously
+
+Treatment vs Control, Timepoint1 vs Timepoint2, etc.
+Pipeline-parallel — Multiple experiments on different datasets
+
+Separate project folders with shared reference genomes
+Include SLURM job array examples, Nextflow examples, R parallel examples.
+
+Section 10: HPC & Linux CLI Integration
+~/.bashrc aliases for RNA-seq workflows
+SLURM/LSF/PBS job submission templates
+Module loading patterns (module load R/4.3, module load STAR/2.7)
+tmux layouts for monitoring jobs
+Conda environment management
+SSH key management for data transfer
+rsync patterns for large file transfer
+Screen/tmux for long-running jobs
+Section 11: Agent Handoff Chains
+3 major workflows with ASCII flow diagrams:
+
+Full RNA-seq Analysis orchestrator → qc-analyst → alignment-specialist → quantification-expert → de-analyst → pathway-explorer → visualization-specialist → report-writer
+
+Quick DE from Counts orchestrator → data-wrangler → de-analyst → pathway-explorer + visualization-specialist (parallel) → report-writer
+
+Troubleshooting Bad QC orchestrator → qc-analyst → (if low quality) → data-wrangler (check metadata) → qc-analyst (re-trim) → alignment-specialist
+
+Each shows what data passes between agents.
+
+Section 12: Quality Gates & Signoff Checklists
+12.1 QC Signoff Checklist (~30 items)
+ FastQC per-base quality >Q30
+ Adapter content <5%
+ GC content normal distribution
+ Duplication levels acceptable
+ Read count per sample >10M (bulk) / >1000 cells (single-cell)
+ Mapping rate >70% (known genome)
+ rRNA contamination <10%
+ Library complexity adequate
+etc.
+12.2 DE Analysis Signoff (~25 items)
+ PCA shows expected sample grouping
+ No outlier samples (cook's distance)
+ Appropriate model design (including batch if needed)
+ Independent filtering applied
+ Log2FC shrinkage applied
+ Multiple testing correction (BH/FDR)
+ Significant genes at FDR <0.05 reported
+ Results saved as CSV + RDS
+etc.
+12.3 Publication-Ready Checklist (~20 items)
+ Methods section complete (tools, versions, parameters)
+ All figures publication quality (300 DPI, vector where possible)
+ Color-blind friendly palettes used
+ Supplementary tables formatted
+ Raw data deposited (GEO/SRA accession)
+ Analysis code in GitHub/Zenodo
+ sessionInfo() / conda list captured
+etc.
+Section 13: Quick Start Guide
+5-step getting started:
+
+Create workspace structure (mkdir commands)
+Install tools (conda/mamba environment)
+Create agent config files
+Run first analysis (simple DE example)
+Generate first report
+13.1 Tool Selection Matrix
+Compare: GitHub Copilot, Claude Code, Cursor, Aider, Continue.dev For RNA-seq scientist: which works best with R, Python, terminal
+
+13.2 25 Ready-to-Use Prompts
+Provide 25 copy-paste prompts covering:
+
+QC: "Run FastQC on all FASTQ files in data/raw/ and generate MultiQC report"
+Alignment: "Align paired-end reads to GRCh38 using STAR with 2-pass mode"
+Counting: "Generate gene-level counts from BAM files using featureCounts with my GTF"
+DE: "Run DESeq2 comparing Treatment vs Control with batch correction"
+Plotting: "Create a volcano plot highlighting genes with |log2FC| > 1 and padj < 0.05"
+Enrichment: "Run GO enrichment (BP, CC, MF) and KEGG pathway analysis on upregulated genes"
+Report: "Write a methods section for my RNA-seq analysis using STAR + DESeq2"
+Debug: "My mapping rate is only 30% — diagnose the issue"
+Metadata: "Create a sample sheet from the filenames in data/raw/"
+Pipeline: "Create a Snakemake workflow for my full RNA-seq analysis"
+etc. (25 total)
+Section 14: Tips & Lessons Learned
+10 practical tips:
+
+Always check strandedness before counting
+Use salmon for speed, STAR for junction discovery
+DESeq2 for small samples (<20), edgeR for large
+Always save sessionInfo() for reproducibility
+Use RDS format not CSV for R objects (preserves types)
+Check batch effects BEFORE DE analysis
+Use lfcShrink (apeglm) not raw log2FC
+PCA is your best friend — look at it first
+Don't filter genes before DESeq2 (it does its own filtering)
+Version control your scripts, not your data
+Section 15: Open Source Tools & Resources
+Bioinformatics Tools
+nf-core/rnaseq (Nextflow pipeline, 1.5k+ stars)
+DESeq2 (Bioconductor, most cited DE tool)
+Salmon (fast pseudoalignment)
+MultiQC (aggregated QC reports)
+IGV (genome browser)
+Practice Datasets
+airway dataset (Bioconductor) — classic DESeq2 tutorial data
+pasilla dataset — Drosophila RNA-seq
+ENCODE RNA-seq data (public)
+GTEx (Genotype-Tissue Expression)
+Learning Resources
+Bioconductor RNA-seq workflow vignette
+Harvard Chan Bioinformatics Core training
+Galaxy Training Network RNA-seq tutorials
+Mike Love's DESeq2 workshop materials
+Section 16: Infrastructure Patterns (Adapted from Claw-Code)
+7 patterns adapted for RNA-seq:
+
+Session Store — Save analysis state to JSON (which samples processed, current step, results paths)
+Permission Model — Agents can't modify raw FASTQ (read-only), can write to analysis/
+Cost Tracker — Track compute hours, storage used, samples processed
+Hook Pipeline — Pre-hooks: validate sample sheet before alignment; Post-hooks: auto-run MultiQC after alignment
+Parity Dashboard — Coverage: samples QC'd / aligned / counted / DE'd / enriched
+Analysis Resume — If interrupted mid-pipeline, resume from last completed sample/step
+CLAW.md Equivalent — Project README with: organism, genome build, question, samples, current state
+Section 17: Automated Analysis Patterns
+Auto-QC loop (check quality → trim → recheck → proceed only if pass)
+Parameter sweep (try different DE thresholds, report sensitivity)
+Cross-validation (DESeq2 vs edgeR agreement as confidence metric)
+Iterative pathway refinement (broad GO → specific KEGG → GSEA ranking)
+Sample outlier detection loop (PCA → flag outlier → remove → re-PCA)
+Include Python/R code skeletons for each pattern.
+
+Section 18: Learning Resources
+Online courses (Coursera Genomic Data Science, edX Bioinformatics)
+Bioconductor workshops (annual BioC conference materials)
+Books (RNA-seq Data Analysis, Computational Genomics with R)
+Communities (Biostars, SEQanswers, Bioconductor Slack, r/bioinformatics)
+Key papers (DESeq2 paper, Love 2014; edgeR, Robinson 2010)
+Appendix A: Glossary
+40+ genomics terms:
+
+FPKM, TPM, CPM, RPKM
+FDR, padj, BH correction
+log2FC, lfcShrink
+PCA, MDS, UMAP, t-SNE
+GO (Gene Ontology), KEGG, Reactome, GSEA
+Strandedness (unstranded, stranded, reverse-stranded)
+UMI, barcode (single-cell)
+GRCh38, GRCm39 (genome builds)
+BAM, CRAM, FASTQ, SAM
+DEG, DGE
+etc.
+Appendix B: Recommended Reading
+7 essential references:
+
+Love MI, Huber W, Anders S (2014) DESeq2. Genome Biology.
+Robinson MD, McCarthy DJ, Smyth GK (2010) edgeR. Bioinformatics.
+Conesa A et al. (2016) RNA-seq best practices. Genome Biology.
+Patro R et al. (2017) Salmon. Nature Methods.
+Dobin A et al. (2013) STAR. Bioinformatics.
+Law CW et al. (2014) limma-voom. Genome Biology.
+Yu G et al. (2012) clusterProfiler. OMICS.
+Appendix C: Institutional Environment Checklist
+ HPC access configured (SLURM/LSF/PBS)
+ Conda/mamba installed
+ R + Bioconductor installed (version ≥ 4.3)
+ Reference genome downloaded (FASTA + GTF)
+ STAR/Salmon index built
+ Storage quota adequate (raw FASTQ ~50GB per sample)
+ Git configured for script version control
+ Data transfer method established (Globus, rsync)
+IMPORTANT WRITING GUIDELINES:
+
+This is for a SCIENTIST who is NOT a software engineer — keep language accessible
+Include REAL tool commands (not placeholders)
+Include REAL R code (library(), DESeq2, ggplot2, clusterProfiler)
+Include REAL Python code (scanpy, pandas, matplotlib)
+Include REAL bash commands (STAR, samtools, FastQC, salmon)
+Make it comprehensive — each section should be thorough
+Use tables, code blocks, bullet points extensively
+Add ❌/✅ for dos/don'ts
+Total target: ~2000-3000 lines for this second half
+Do NOT abbreviate or skip content — write every section fully
+Write the COMPLETE content. No placeholders or "..." or "etc.
