@@ -1,0 +1,65 @@
+name: Smoke Test — Synthetic Data Generation
+
+on:
+  push:
+    branches: [master, main, develop]
+    paths:
+      - "scripts/python/**"
+      - "configs/**"
+  pull_request:
+    branches: [master, main]
+    paths:
+      - "scripts/python/**"
+      - "configs/**"
+
+jobs:
+  smoke-test:
+    name: Synthetic Data Generation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('configs/conda_envs/scrna_wound_healing.yml') }}
+
+      - name: Install core dependencies
+        run: |
+          pip install --upgrade pip
+          pip install anndata scanpy numpy pandas scipy matplotlib seaborn
+
+      - name: Run synthetic data generation (smoke test)
+        run: |
+          python scripts/python/generate_synthetic_data.py \
+            --n-cells 200 \
+            --n-genes 500 \
+            --output-dir data/synthetic/ci_test \
+            --seed 42
+        timeout-minutes: 10
+
+      - name: Verify output files exist
+        run: |
+          python -c "
+          import os
+          out = 'data/synthetic/ci_test'
+          files = os.listdir(out) if os.path.exists(out) else []
+          print('Generated files:', files)
+          assert len(files) > 0, 'No output files generated — smoke test failed!'
+          print('Smoke test PASSED')
+          "
+
+      - name: Upload smoke test artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-test-outputs
+          path: data/synthetic/ci_test/
+          retention-days: 3

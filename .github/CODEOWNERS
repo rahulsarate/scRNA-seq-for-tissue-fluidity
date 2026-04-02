@@ -1,0 +1,21 @@
+# CODEOWNERS — scRNA-seq Tissue Fluidity Project
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Replace @YOUR-GITHUB-USERNAME below with your actual GitHub username.
+# Format: <pattern>  <owner>
+
+# Default owner for everything
+*                                   @YOUR-GITHUB-USERNAME
+
+# Core analysis scripts
+scripts/python/                     @YOUR-GITHUB-USERNAME
+scripts/R/                          @YOUR-GITHUB-USERNAME
+
+# CI/CD configuration — require owner review
+.github/                            @YOUR-GITHUB-USERNAME
+
+# Agent configuration
+.agent_config/                      @YOUR-GITHUB-USERNAME
+
+# Data configs (no raw data — .gitignore handles that)
+configs/                            @YOUR-GITHUB-USERNAME
