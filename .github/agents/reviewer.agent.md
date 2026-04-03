@@ -3,6 +3,25 @@ description: "Code review, statistical validation, and reproducibility checking 
 tools:
   - search
   - web
+  - problems
+  - usages
+agents:
+  - orchestrator
+  - coder
+  - report-writer
+handoffs:
+  - label: "Fix Issues"
+    agent: coder
+    prompt: "Review found issues that need fixing. See the review findings above. Fix the identified problems in the scripts while maintaining reproducibility (seed=42, version logging)."
+    send: false
+  - label: "Document Findings"
+    agent: report-writer
+    prompt: "Review is complete. Document the validated results, methods accuracy, and reproducibility status in a report. Save to reports/."
+    send: true
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "Review complete. See findings above. Route to next step or request fixes from coder."
+    send: true
 ---
 
 # Reviewer — Code Review & Statistical Validation

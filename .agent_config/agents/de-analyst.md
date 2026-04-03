@@ -8,6 +8,11 @@ tools:
   - create_file
   - replace_string_in_file
 applyTo: "analysis/de/**,scripts/R/**,scripts/python/**"
+agents:
+  - orchestrator
+  - pathway-explorer
+  - visualization-specialist
+  - coder
 ---
 
 # DE Analyst — scRNA-seq Differential Expression

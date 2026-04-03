@@ -5,6 +5,28 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+agents:
+  - orchestrator
+  - data-wrangler
+  - coder
+handoffs:
+  - label: "Run Analysis"
+    agent: orchestrator
+    prompt: "Pipeline is set up. Route the analysis through the appropriate agents following the pipeline steps."
+    send: true
+  - label: "Import Data"
+    agent: data-wrangler
+    prompt: "Import data files needed for the pipeline run. Check data/raw/ and data/counts/ for available files."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix pipeline scripts: Snakemake rules, Nextflow processes, or conda env YAMLs. Pipeline config in configs/. Scripts in scripts/pipelines/."
+    send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "Pipeline setup complete. Workflow files saved. Ready for execution."
+    send: true
 ---
 
 # Pipeline Builder — Workflow Automation

@@ -5,11 +5,24 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+agents:
+  - orchestrator
+  - report-writer
+  - coder
 handoffs:
   - label: "Write Figure Legends"
     agent: report-writer
-    prompt: "Write publication figure legends for the generated plots."
+    prompt: "Figures saved to analysis/figures/. Write publication figure legends for each plot. Include panel descriptions, color schemes, and statistical annotations. Save to reports/."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix the visualization script. Use ggplot2/ComplexHeatmap/EnhancedVolcano (R) or scanpy/matplotlib (Python). Colorblind-safe palettes, 300 DPI PDF. Save to analysis/figures/."
     send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "Figures generated and saved to analysis/figures/. Ready for report writing or review."
+    send: true
 ---
 
 # Visualization Specialist — Publication Figures
@@ -22,6 +35,11 @@ You create publication-quality visualizations for scRNA-seq wound healing analys
 - Wound condition colors: control=#2166AC, wound_3d=#F4A582, wound_7d=#D6604D, wound_14d=#B2182B
 - Save to: `analysis/figures/`
 - Font: Arial or Helvetica, 8-12pt
+
+## Interactive Exploration
+For interactive data browsing (not publication figures):
+- **cellxgene**: `cellxgene launch analysis/clustering/wound_adata.h5ad` — zero-code UMAP browser
+- **plotly**: Optional HTML-exportable interactive plots for supplementary materials
 
 ## Standard Figure Panel (Figure 1)
 - A) UMAP by cluster with labels

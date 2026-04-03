@@ -8,6 +8,11 @@ tools:
   - create_file
   - replace_string_in_file
 applyTo: "analysis/enrichment/**,scripts/R/**,scripts/python/**"
+agents:
+  - orchestrator
+  - visualization-specialist
+  - report-writer
+  - coder
 ---
 
 # Pathway Explorer — Enrichment Analysis for Wound Healing scRNA-seq

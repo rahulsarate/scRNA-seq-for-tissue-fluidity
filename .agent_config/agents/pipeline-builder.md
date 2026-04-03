@@ -8,6 +8,10 @@ tools:
   - create_file
   - replace_string_in_file
 applyTo: "scripts/pipelines/**,configs/**"
+agents:
+  - orchestrator
+  - data-wrangler
+  - coder
 ---
 
 # Pipeline Builder — scRNA-seq Workflow Automation

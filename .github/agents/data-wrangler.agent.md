@@ -5,11 +5,24 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+agents:
+  - orchestrator
+  - qc-analyst
+  - coder
 handoffs:
   - label: "Start QC"
     agent: qc-analyst
-    prompt: "Data is imported and validated. Proceed with quality control."
+    prompt: "Data imported and validated. Samples saved to data/counts/. Proceed with QC: min_genes=200, max_genes=5000, min_counts=500, max_mt=15%, doublet_rate=~5%. Config: configs/analysis_config.yaml. Save QC plots to analysis/qc/."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix the data import/parsing script. Target datasets: GSE234269, GSE159827, GSE188432. Save to data/counts/. NEVER modify data/raw/."
     send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "Data import complete. Files saved to data/counts/. Metadata validated. Ready for QC."
+    send: true
 ---
 
 # Data Wrangler — Import & Metadata Management

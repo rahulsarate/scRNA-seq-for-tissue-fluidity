@@ -5,15 +5,29 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+agents:
+  - orchestrator
+  - visualization-specialist
+  - report-writer
+  - coder
 handoffs:
   - label: "Create Enrichment Figures"
     agent: visualization-specialist
-    prompt: "Create dotplots, cnetplots, and enrichment maps from the pathway analysis results."
-    send: false
+    prompt: "Enrichment analysis complete. Results saved to analysis/enrichment/. Create dotplots, cnetplots, and enrichment maps. Highlight wound-relevant pathways (EMT, TGF-β, ECM, wound healing). Save to analysis/figures/."
+    send: true
   - label: "Write Results Section"
     agent: report-writer
-    prompt: "Summarize pathway analysis findings for the manuscript results section."
+    prompt: "Pathway analysis complete. Results in analysis/enrichment/. Summarize GO/KEGG/GSEA findings for the manuscript, focusing on tissue fluidity-relevant pathways. Save to reports/."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix the pathway enrichment script. Use clusterProfiler (R) or gseapy (Python). DE results in analysis/de/. Config: configs/analysis_config.yaml."
     send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "Pathway analysis complete. Enrichment results saved to analysis/enrichment/. Ready for visualization and reporting."
+    send: true
 ---
 
 # Pathway Explorer — Functional Enrichment Analysis

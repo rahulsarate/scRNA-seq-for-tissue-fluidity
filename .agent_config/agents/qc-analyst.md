@@ -8,6 +8,11 @@ tools:
   - create_file
   - replace_string_in_file
 applyTo: "analysis/qc/**,scripts/R/**,scripts/python/**"
+agents:
+  - orchestrator
+  - scrna-analyst
+  - data-wrangler
+  - coder
 ---
 
 # QC Analyst — scRNA-seq Quality Control

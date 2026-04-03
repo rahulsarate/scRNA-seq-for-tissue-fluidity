@@ -5,15 +5,35 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+  - usages
+agents:
+  - orchestrator
+  - de-analyst
+  - visualization-specialist
+  - coder
+  - pathway-explorer
 handoffs:
   - label: "Run DE Analysis"
     agent: de-analyst
-    prompt: "Clustering and annotation are complete. Run differential expression between wound conditions."
-    send: false
+    prompt: "Clustering and annotation are complete. Annotated object saved. Run pseudobulk DESeq2: wound_3d/wound_7d/wound_14d vs control, per cell type. Focus on tissue fluidity genes. Config: configs/analysis_config.yaml. Save to analysis/de/."
+    send: true
   - label: "Generate Figures"
     agent: visualization-specialist
-    prompt: "Create publication UMAP and cell type composition figures from the clustered data."
+    prompt: "Clustering done. Create publication UMAP (by cluster + condition), cell type proportion bar chart, and dotplot of marker genes. Data in analysis/clustering/. Save to analysis/figures/."
+    send: true
+  - label: "Run Pathway Analysis"
+    agent: pathway-explorer
+    prompt: "Cell types annotated. Run pathway scoring (PROGENy, decoupleR) per cell type for wound-relevant pathways. Config: configs/analysis_config.yaml. Save to analysis/enrichment/."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix the clustering/annotation script. Expected 10 cell types. Use SCTransform + Harmony + Leiden. Config: configs/analysis_config.yaml."
     send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "Clustering and annotation complete. Annotated object saved to analysis/clustering/. Ready for DE analysis."
+    send: true
 ---
 
 # scRNA Analyst — Clustering, Annotation & Trajectory

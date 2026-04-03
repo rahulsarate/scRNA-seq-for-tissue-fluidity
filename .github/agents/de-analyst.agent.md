@@ -5,15 +5,30 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+  - usages
+agents:
+  - orchestrator
+  - pathway-explorer
+  - visualization-specialist
+  - coder
 handoffs:
   - label: "Run Pathway Analysis"
     agent: pathway-explorer
-    prompt: "DE analysis is complete. Run GO/KEGG/GSEA enrichment on the significant genes."
-    send: false
+    prompt: "DE analysis complete. Significant genes saved to analysis/de/. Run GO/KEGG/GSEA enrichment on upregulated and downregulated gene lists. Focus on EMT, ECM, TGF-β, wound healing pathways. Config: configs/analysis_config.yaml. Save to analysis/enrichment/."
+    send: true
   - label: "Create Volcano Plots"
     agent: visualization-specialist
-    prompt: "Create volcano plots from the DE results, highlighting tissue fluidity genes."
+    prompt: "DE results saved to analysis/de/. Create volcano plots highlighting tissue fluidity genes (EMT, ECM, migration, mechano). Use EnhancedVolcano. Thresholds: padj<0.05, |log2FC|>1. Save to analysis/figures/."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix the DE analysis script. Use pseudobulk DESeq2 with ashr shrinkage. Comparisons: wound_3d/7d/14d vs control per cell type. Config: configs/analysis_config.yaml."
     send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "DE analysis complete. Results saved to analysis/de/. Ready for pathway enrichment and visualization."
+    send: true
 ---
 
 # DE Analyst — Differential Expression

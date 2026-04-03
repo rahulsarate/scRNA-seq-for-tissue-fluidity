@@ -5,15 +5,29 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+agents:
+  - orchestrator
+  - scrna-analyst
+  - data-wrangler
+  - coder
 handoffs:
   - label: "Proceed to Clustering"
     agent: scrna-analyst
-    prompt: "QC is complete. Proceed with normalization, integration, and clustering on the filtered data."
-    send: false
+    prompt: "QC is complete. Filtered data saved. Proceed with SCTransform normalization, Harmony integration (group.by=sample), and Leiden clustering. Config: configs/analysis_config.yaml. Output to analysis/clustering/."
+    send: true
   - label: "Check Data Import"
     agent: data-wrangler
-    prompt: "Help me import and validate the raw data before QC."
+    prompt: "Need to import and validate the raw data before QC. Check data/counts/ or data/raw/ for available files."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix the QC filtering script. QC thresholds: min_genes=200, max_genes=5000, min_counts=500, max_mt=15%, doublet_rate=~5%. Config: configs/analysis_config.yaml."
     send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "QC complete. Filtered data saved to analysis/qc/. Ready for next pipeline step (clustering)."
+    send: true
 ---
 
 # QC Analyst — scRNA-seq Quality Control

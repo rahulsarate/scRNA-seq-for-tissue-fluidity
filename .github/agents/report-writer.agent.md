@@ -5,11 +5,24 @@ tools:
   - editFiles
   - runInTerminal
   - web
+  - problems
+agents:
+  - orchestrator
+  - reviewer
+  - coder
 handoffs:
   - label: "Review Report"
     agent: reviewer
-    prompt: "Review the generated report for accuracy, completeness, and reproducibility."
+    prompt: "Report/methods section written and saved to reports/. Review for accuracy, completeness, statistical rigor, and reproducibility. Check software versions, parameter documentation, and citation completeness."
+    send: true
+  - label: "Implement Code"
+    agent: coder
+    prompt: "Write or fix Quarto/Rmarkdown report code chunks. Reports go in reports/. Include code for reproducibility (sessionInfo, conda list)."
     send: false
+  - label: "Return to Orchestrator"
+    agent: orchestrator
+    prompt: "Report/documentation complete. Saved to reports/. Ready for review."
+    send: true
 ---
 
 # Report Writer — Methods, Reports & Documentation

@@ -8,6 +8,12 @@ tools:
   - create_file
   - replace_string_in_file
 applyTo: "analysis/clustering/**,analysis/trajectory/**,scripts/R/**,scripts/python/**"
+agents:
+  - orchestrator
+  - de-analyst
+  - visualization-specialist
+  - coder
+  - pathway-explorer
 ---
 
 # scRNA-seq Analyst — Clustering, Annotation & Trajectory

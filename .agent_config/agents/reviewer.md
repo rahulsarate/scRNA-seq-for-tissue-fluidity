@@ -8,6 +8,10 @@ tools:
   - semantic_search
   - grep_search
 applyTo: "**/*"
+agents:
+  - orchestrator
+  - coder
+  - report-writer
 ---
 
 # Reviewer Agent — Quality & Reproducibility Check
