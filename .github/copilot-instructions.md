@@ -15,8 +15,10 @@
 
 ## Technology Stack
 - **R** (v4.4.0): Seurat v5, DESeq2, clusterProfiler, ggplot2, ComplexHeatmap, EnhancedVolcano
-- **Python** (3.11): Scanpy, AnnData, scVelo, CellChat (via rpy2), pandas, matplotlib, seaborn
-- **Conda env**: `configs/conda_envs/scrna_wound_healing.yml`
+- **Python** (3.10): Scanpy, AnnData, scVelo, CellChat (via rpy2), pandas, matplotlib, seaborn
+- **pip env**: `.venv/` (Python 3.10) — core packages via `requirements.txt`
+- **Conda env**: `configs/conda_envs/scrna_wound_healing.yml` — full env with C-compiled packages
+- **Skills**: `.github/skills/` — auto-discovered domain knowledge (pipeline, fluidity, coding, QC, DE, enrichment, figures)
 
 ## Coding Conventions
 - R scripts: snake_case for variables, PascalCase for Seurat objects (e.g., `wound_sobj`)

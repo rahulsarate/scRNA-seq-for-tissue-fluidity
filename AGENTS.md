@@ -20,6 +20,7 @@ Select the right agent for your task:
 | `pipeline-builder` | Workflow automation | Snakemake, Nextflow, conda environments |
 | `report-writer` | Documentation | Methods sections, Quarto reports, figure legends |
 | `reviewer` | Code review | Statistical validation, reproducibility checks |
+| `frontend-dashboard` | Interactive dashboard | Browse UMAP, DE, fluidity via React + FastAPI |
 
 ## How to Invoke (VS Code Copilot Chat)
 ```
@@ -34,6 +35,7 @@ Select the right agent for your task:
 @pipeline-builder create Snakemake workflow for full pipeline
 @report-writer write methods section for the QC + clustering steps
 @reviewer validate the DE analysis for statistical correctness
+@frontend-dashboard start the dashboard for interactive data exploration
 ```
 
 ## Handoff Order (typical analysis)
@@ -58,7 +60,8 @@ Every agent can hand off forward in the pipeline AND return to the orchestrator 
 | `visualization-specialist` | report-writer, coder | orchestrator |
 | `report-writer` | reviewer, coder | orchestrator |
 | `reviewer` | coder (fix issues), report-writer (document findings) | orchestrator |
-| `coder` | qc-analyst, scrna-analyst, visualization-specialist, reviewer, pipeline-builder | orchestrator |
+| `coder` | qc-analyst, scrna-analyst, visualization-specialist, reviewer, pipeline-builder, frontend-dashboard | orchestrator |
+| `frontend-dashboard` | coder | orchestrator |
 
 ### Handoff Behavior
 - **`send: true`**: Automatic task transfer — the target agent starts working immediately
@@ -87,6 +90,7 @@ Skills are in `.github/skills/<name>/SKILL.md` and are auto-discovered by VS Cod
 | `qc-workflow` | QC filtering and doublet detection | qc-analyst, coder |
 | `data-import` | GEO/10X data import patterns | data-wrangler, coder |
 | `methods-writing` | Methods sections and figure legends | report-writer |
+| `frontend-dashboard` | Interactive dashboard dev conventions | frontend-dashboard, coder |
 
 ## Python Environment
 - **pip**: `.venv/` (Python 3.10) — `requirements.txt` for core packages

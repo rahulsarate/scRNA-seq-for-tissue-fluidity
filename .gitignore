@@ -36,6 +36,11 @@ __pycache__/
 *.pyo
 .ipynb_checkpoints/
 
+# --- Node / Dashboard ---
+node_modules/
+dist/
+*.tsbuildinfo
+
 # --- Environment ---
 .env
 .venv/

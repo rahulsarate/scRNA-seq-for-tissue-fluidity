@@ -15,6 +15,7 @@ agents:
   - pipeline-builder
   - report-writer
   - reviewer
+  - frontend-dashboard
 handoffs:
   - label: "Import Data"
     agent: data-wrangler
@@ -56,6 +57,10 @@ handoffs:
     agent: coder
     prompt: "Write or edit Python/R scripts. Python env: .venv/ or conda scrna_wound_healing. Config: configs/analysis_config.yaml. Scripts go in scripts/python/ or scripts/R/. Follow project coding conventions."
     send: false
+  - label: "Launch Dashboard"
+    agent: frontend-dashboard
+    prompt: "Set up or update the interactive scRNA-seq dashboard. Backend: dashboard/backend/ (FastAPI). Frontend: dashboard/frontend/ (React + Vite). Data sources: analysis/ directories. Config: configs/analysis_config.yaml."
+    send: true
 ---
 
 # Orchestrator — scRNA-seq Wound Healing Analysis
@@ -93,6 +98,7 @@ You are the orchestrator for a single-cell RNA-seq project investigating tissue 
 | pathway, GO, KEGG, GSEA, enrichment | pathway-explorer | Functional enrichment and pathway scoring |
 | plot, volcano, heatmap, figure, UMAP viz | visualization-specialist | Publication-quality figures |
 | import, parse, metadata, sample sheet | data-wrangler | Data loading and metadata management |
+| dashboard, interactive, browse, explore data | frontend-dashboard | Interactive React + FastAPI data browser |
 | pipeline, Snakemake, Nextflow, conda | pipeline-builder | Workflow automation |
 | methods, report, manuscript, Quarto | report-writer | Documentation and reports |
 | review, validate, check, reproducibility | reviewer | Code review and statistical validation |

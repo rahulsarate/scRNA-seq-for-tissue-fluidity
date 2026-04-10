@@ -98,20 +98,22 @@ python scripts/python/00_download_geo_data.py
 
 ## AI Agents
 
-This project uses **10 specialized AI agents** defined in `.agent_config/agents/`:
+This project uses **10 specialized AI agents** defined in `.github/agents/` (VS Code native) with backups in `.agent_config/agents/`:
 
-| Agent | Role |
-|-------|------|
-| `orchestrator` | Route tasks to the right agent |
-| `qc-analyst` | Cell filtering, doublet removal, SoupX |
-| `scrna-analyst` | Clustering, annotation, trajectory |
-| `de-analyst` | Pseudobulk DESeq2, MAST, FindMarkers |
-| `pathway-explorer` | GO, KEGG, GSEA, decoupleR |
-| `visualization-specialist` | UMAP, volcano, heatmap, dot plots |
-| `data-wrangler` | Import GEO data, merge samples |
-| `pipeline-builder` | Snakemake/Nextflow workflows |
-| `report-writer` | Methods sections, Rmarkdown |
-| `reviewer` | Statistical & reproducibility review |
+| Agent | Role | Invoke in VS Code |
+|-------|------|--------------------|
+| `orchestrator` | Route tasks to the right agent | `@orchestrator plan full analysis` |
+| `qc-analyst` | Cell filtering, doublet removal, SoupX | `@qc-analyst run QC on synthetic data` |
+| `scrna-analyst` | Clustering, annotation, trajectory | `@scrna-analyst cluster and annotate` |
+| `de-analyst` | Pseudobulk DESeq2, MAST, FindMarkers | `@de-analyst run DE wound_7d vs control` |
+| `pathway-explorer` | GO, KEGG, GSEA, decoupleR | `@pathway-explorer GO enrichment on DE results` |
+| `visualization-specialist` | UMAP, volcano, heatmap, dot plots | `@visualization-specialist create Figure 1` |
+| `data-wrangler` | Import GEO data, merge samples | `@data-wrangler download GSE234269` |
+| `pipeline-builder` | Snakemake/Nextflow workflows | `@pipeline-builder create Snakemake pipeline` |
+| `report-writer` | Methods sections, Quarto reports | `@report-writer write methods section` |
+| `reviewer` | Statistical & reproducibility review | `@reviewer validate DE results` |
+
+> **New to agents?** See [docs/USAGE_GUIDE.md](docs/USAGE_GUIDE.md) for a complete walkthrough.
 
 ---
 
@@ -139,6 +141,23 @@ See [docs/research-paradigms/new_research_paradigms.md](docs/research-paradigms/
 6. **Cross-Tissue Fluidity** — Compare skin, gut, liver, lung repair
 7. **Epigenetic Fluidity Memory** — Chromatin-level wound memory
 8. **Single-Cell Mechanical Phenotyping** — Stiffness + transcriptome
+
+---
+
+## CI/CD & Automation
+
+| Workflow | Trigger | What It Does |
+|----------|---------|-------|
+| `lint.yml` | Push/PR to main | Runs flake8 (Python) + lintr (R) |
+| `smoke-test.yml` | Push/PR when scripts change | Generates small synthetic dataset, validates output |
+
+Run locally:
+```bash
+# Lint Python
+flake8 scripts/python/ --max-line-length=120
+# Run smoke test
+python scripts/python/generate_synthetic_data.py
+```
 
 ---
 

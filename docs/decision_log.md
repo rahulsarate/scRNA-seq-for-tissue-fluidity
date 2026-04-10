@@ -34,3 +34,17 @@ Track key analysis decisions, parameter choices, and their rationale.
 **Rationale**: Fast, good preservation of biological variation, widely used in scRNA-seq
 **Alternatives considered**: RPCA (Seurat native, good but slower), scVI (deep learning, overkill for 8 samples)
 **Impact**: All downstream analyses (clustering, DE, trajectory) use Harmony-corrected embeddings
+
+### 2026-04-02 — 4-Phase Roadmap Adopted
+**Context**: Need a structured plan to move from infrastructure to publication
+**Decision**: Phase 1 (synthetic validation) → Phase 2 (GSE234269 real data) → Phase 3 (cross-dataset) → Phase 4 (publication)
+**Rationale**: Synthetic-first catches pipeline bugs cheaply; staged approach lets each agent validate its step before real data
+**Alternatives considered**: Jump straight to real data (risky if pipeline has bugs), all datasets at once (too scattered)
+**Impact**: All analysis work follows phase gates in PROJECT.md
+
+### 2026-04-02 — Visualization stays Python/R (no React/FastAPI)
+**Context**: Evaluated whether web framework needed for visualization
+**Decision**: Use matplotlib/seaborn/scanpy (Python) + ggplot2/ComplexHeatmap (R) for static figures; cellxgene for interactive exploration
+**Rationale**: scRNA-seq publication figures are static PDFs. Interactive exploration is handled by cellxgene (zero-code). A React/FastAPI dashboard adds complexity with no benefit for this project scope
+**Alternatives considered**: React + FastAPI dashboard (overkill), Streamlit/Dash (decent but not needed when cellxgene exists), plotly (good for supplementary interactive plots)
+**Impact**: No frontend/backend web development needed; visualization-specialist agent focuses on matplotlib/ggplot2
