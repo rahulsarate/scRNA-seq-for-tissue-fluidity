@@ -1,0 +1,23 @@
+{
+  "GSE234269": {
+    "title": "Wound healing timepoints 3d/7d/14d (Itgbl1 fibrogenesis)",
+    "organism": "Mus musculus",
+    "relevance": "PRIMARY \u2014 wound healing timepoints matching study design",
+    "size_mb": 91.6,
+    "format": "tar_csv"
+  },
+  "GSE159827": {
+    "title": "Tissue mechanics \u2014 unwounded dorsal skin (Drop-Seq)",
+    "organism": "Mus musculus",
+    "relevance": "VALIDATION \u2014 tissue mechanics + wound healing",
+    "size_mb": 12.1,
+    "format": "tar_txt"
+  },
+  "GSE188432": {
+    "title": "Aged wound healing \u2014 young vs aged skin (10X MTX)",
+    "organism": "Mus musculus",
+    "relevance": "COMPARISON \u2014 age effects on wound healing",
+    "size_mb": 558,
+    "format": "10x_mtx"
+  }
+}

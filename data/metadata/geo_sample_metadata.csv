@@ -1,0 +1,2 @@
+dataset,sample_id,condition,timepoint,n_cells,organism,relevance
+GSE159827,unwounded_skin,control,0d,2803,Mus musculus,VALIDATION — tissue mechanics + wound healing

@@ -55,7 +55,9 @@ async def get_de_results(
             "n_total": len(df),
         }
 
-    df["gene"] = df.index
+    # Use existing 'gene' column, or fall back to index
+    if "gene" not in df.columns:
+        df["gene"] = df.index
     df["significant"] = "ns"
     up_mask = (df["padj"] < padj_threshold) & (df["log2FC"] > log2fc_threshold)
     down_mask = (df["padj"] < padj_threshold) & (df["log2FC"] < -log2fc_threshold)

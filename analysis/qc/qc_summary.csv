@@ -1,0 +1,5 @@
+sample,n_cells,median_genes,median_counts,median_mt_pct
+control_rep1,2000,438.0,986.0,6.4350000000000005
+wound_3d_rep1,2000,439.0,1123.0,6.66
+wound_7d_rep1,2000,440.0,1232.0,6.205
+wound_14d_rep1,2000,440.0,1071.0,6.5

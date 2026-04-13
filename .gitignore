@@ -11,6 +11,9 @@ data/trimmed/
 data/aligned/
 data/counts/**/*.h5
 data/counts/**/*.h5ad
+data/counts/**/*.tar
+data/counts/**/*.gz
+data/counts/**/extracted/
 data/references/*.fa
 data/references/*.fasta
 data/references/*.gtf
