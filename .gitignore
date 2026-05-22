@@ -14,6 +14,8 @@ data/counts/**/*.h5ad
 data/counts/**/*.tar
 data/counts/**/*.gz
 data/counts/**/extracted/
+data/counts/tcga_pathology_emt/
+data/metadata/tcga_pathology_emt/report_files/
 data/references/*.fa
 data/references/*.fasta
 data/references/*.gtf
@@ -23,6 +25,9 @@ analysis/figures/*.png
 analysis/figures/*.pdf
 analysis/clustering/*.h5ad
 analysis/clustering/*.rds
+analysis/clinical_nlp/**/*.parquet
+analysis/clinical_nlp/models/
+analysis/clinical_nlp/features/
 data/synthetic/*.h5ad
 data/synthetic/*.csv
 data/synthetic/*.rds
