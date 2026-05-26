@@ -4,6 +4,16 @@
 This workspace analyzes single-cell RNA sequencing data from mouse skin wound healing experiments.
 The central question: How does **tissue fluidity** — collective cell migration and ECM remodeling — change across wound healing phases?
 
+## Repository Boundary Update
+As of 2026-05-26, this repository is only for the mouse scRNA-seq wound-healing tissue-fluidity project.
+The separate TCGA pathology/NLP EMT project was moved to:
+
+- Local folder: `D:\VS CODE Project\clinical-nlp-emt-tcga`
+- GitHub: `https://github.com/rahulsarate/clinical-nlp-emt-tcga` (private)
+
+Do not recreate or continue Clinical NLP / TCGA pathology work in this repo. Use the sibling repository for files named `clinical_nlp_*`, scripts `10_*.py` through `18_*.py`, and paths containing `tcga_pathology_emt`.
+See `docs/REPO_SPLIT_AND_HANDOFF.md` for the full split map.
+
 ## Available Agents
 Select the right agent for your task:
 

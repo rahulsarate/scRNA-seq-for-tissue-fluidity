@@ -11,6 +11,8 @@
 
 This project investigates how **tissue fluidity** — the mechanical property governing collective cell migration and ECM remodeling — is dynamically regulated during skin wound healing, using **single-cell RNA sequencing (scRNA-seq)** to dissect cell-type-specific gene programs across wound healing phases.
 
+> **Repository boundary note (2026-05-26)**: the TCGA pathology / Clinical NLP EMT work has been split into `D:\VS CODE Project\clinical-nlp-emt-tcga` and pushed to `https://github.com/rahulsarate/clinical-nlp-emt-tcga` as a private repository. This repo should stay focused on the mouse wound-healing scRNA-seq project. See `docs/REPO_SPLIT_AND_HANDOFF.md`.
+
 ### Research Questions
 1. How does tissue fluidity change across wound healing phases (homeostasis → inflammatory → proliferative → remodeling)?
 2. Which cell types are the primary drivers of fluidity changes?

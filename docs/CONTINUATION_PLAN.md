@@ -5,6 +5,19 @@
 
 ---
 
+## Repository Boundary Update
+
+As of 2026-05-26, this folder is only the mouse scRNA-seq wound-healing tissue-fluidity project.
+The TCGA pathology / Clinical NLP EMT project has been moved to:
+
+- Local folder: `D:\VS CODE Project\clinical-nlp-emt-tcga`
+- GitHub: `https://github.com/rahulsarate/clinical-nlp-emt-tcga` (private)
+
+Use that sibling repo for anything involving `clinical_nlp`, `tcga_pathology_emt`, pathology reports, TCGA bulk RNA EMT scoring, or scripts `10_*.py` through `18_*.py`.
+See `docs/REPO_SPLIT_AND_HANDOFF.md` for the full moved-file map.
+
+---
+
 ## What Has Been Done (Completed)
 
 ### Phase 1: Infrastructure & Synthetic Pipeline ✅
