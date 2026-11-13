@@ -1,179 +1,121 @@
-# scRNA-seq Analysis: Tissue Fluidity in Wound Healing
+# Single-cell analytics for tissue fluidity and wound healing
 
-> **PI**: Rahul M Sarate  
-> **Project**: Dynamic regulation of tissue fluidity controls skin repair during wound healing  
-> **Organism**: *Mus musculus* (C57BL/6J)  
-> **Created**: 2026-04-02
+**Python / Scanpy · R / Seurat · Experimental data QC · Cell-state analysis · Scientific visualisation**
 
----
+A scientific analytics portfolio project by **Rahul Sarate, PhD**, exploring gene programmes relevant to cell migration, extracellular matrix remodelling, and mouse skin repair.
 
-## Overview
+The project connects an experimental tissue-biology question with single-cell data exploration: **which cell states and molecular programmes might help explain changes in tissue behaviour during wound healing?**
 
-This project investigates how **tissue fluidity** — the mechanical property governing collective cell migration and ECM remodeling — is dynamically regulated during skin wound healing, using **single-cell RNA sequencing (scRNA-seq)** to dissect cell-type-specific gene programs across wound healing phases.
+> **Current scope:** The quick-start Python and R workflows use synthetic data. Real GEO data import and QC are described in project records, but the complete real-data analysis is still in progress. This repository is a transcriptomics project, not a microscopy segmentation or tracking pipeline. Gene-set scores are exploratory proxies and do not directly measure mechanical tissue fluidity.
 
-> **Repository boundary note (2026-05-26)**: the TCGA pathology / Clinical NLP EMT work has been split into `D:\VS CODE Project\clinical-nlp-emt-tcga` and pushed to `https://github.com/rahulsarate/clinical-nlp-emt-tcga` as a private repository. This repo should stay focused on the mouse wound-healing scRNA-seq project. See `docs/REPO_SPLIT_AND_HANDOFF.md`.
+## Why this project is relevant to scientific analytics
 
-### Research Questions
-1. How does tissue fluidity change across wound healing phases (homeostasis → inflammatory → proliferative → remodeling)?
-2. Which cell types are the primary drivers of fluidity changes?
-3. What are the key gene regulatory networks controlling the fluidity transition?
-4. Can tissue fluidity signatures predict wound healing outcomes?
+| Capability | Evidence in this repository |
+| --- | --- |
+| Experimental data handling | Count-matrix import utilities, sample metadata, and QC summaries |
+| Python scientific computing | Scanpy/AnnData workflow with NumPy, pandas, Matplotlib, and Seaborn |
+| R scientific computing | Seurat workflow with ggplot2, dplyr, and patchwork |
+| Biological interpretation | Marker panels and gene sets related to skin cell identity, EMT, ECM, migration, and mechanotransduction |
+| Exploratory statistics | Cluster-marker and condition comparisons; limitations below distinguish cell-level exploration from biological-replicate inference |
+| Communication with scientists | QC plots, UMAPs, marker plots, gene-score visualisations, and an interactive dashboard |
 
----
+**Start with:** [Python analysis](scripts/python/01_scrna_analysis_pipeline.py) · [R analysis](scripts/R/01_seurat_analysis.R) · [Dashboard](dashboard/README.md) · [Sample-sheet template](templates/sample_sheet_template.csv)
 
-## Project Structure
+## Implemented workflow and current status
 
-```
-scRNA_seq/
-├── .agent_config/          # AI agent definitions (10 agents, 10 skills)
-│   ├── agents/             # orchestrator, qc-analyst, de-analyst, etc.
-│   ├── skills/             # fastqc-pipeline, deseq2-analysis, etc.
-│   └── pipelines/          # Pipeline state tracking
-├── data/
-│   ├── raw/                # Raw FASTQ (READ-ONLY)
-│   ├── counts/             # Cell Ranger output / count matrices
-│   ├── synthetic/          # Synthetic test data
-│   ├── references/         # Genome refs + GEO dataset catalog
-│   └── metadata/           # Sample sheets
-├── analysis/
-│   ├── qc/                 # QC reports & plots
-│   ├── de/                 # Differential expression results
-│   ├── enrichment/         # GO/KEGG/GSEA results
-│   ├── clustering/         # Processed AnnData/Seurat + UMAP coords
-│   ├── figures/            # Publication-quality figures
-│   └── trajectory/         # Pseudotime & RNA velocity
-├── scripts/
-│   ├── python/             # Analysis pipeline (3 main scripts)
-│   ├── R/                  # R/Seurat scripts
-│   └── bash/               # Download & shell scripts
-├── configs/                # Analysis parameters & conda envs
-├── docs/                   # 25 prompts, research paradigms, methods
-├── reports/                # Rmarkdown/Quarto reports
-├── templates/              # Sample sheet & analysis templates
-└── logs/                   # Session & pipeline logs
-```
+### Synthetic-data demonstration
 
----
+1. Generate synthetic counts and sample metadata.
+2. Calculate QC metrics and filter cells/genes.
+3. Normalise expression and identify variable genes.
+4. Run PCA, UMAP, and clustering.
+5. Explore cell-type markers and expression patterns.
+6. Generate exploratory differential-expression tables.
+7. Score gene sets associated with wound-repair biology.
+8. Export processed objects, tables, and figures.
 
-## Quick Start
+The Python script uses Scanpy and cell-level Wilcoxon comparisons. The R script currently uses log normalisation and Seurat marker analysis. Although some script comments describe SCTransform, Harmony, or pseudobulk DESeq2, those methods are **not executed by the current R demonstration**.
 
-### 1. Set Up Environment
+### Real-data work
+
+The [continuation plan](docs/CONTINUATION_PLAN.md) records GEO import and QC work and identifies integration, clustering, and replicate-aware downstream analysis as next steps. Some locally generated scripts and processed objects referenced there are not included in this checkout.
+
+The checked-in [QC summary](analysis/qc/qc_summary.csv) contains four 2,000-cell demonstration samples. It should not be presented as validation of the larger real-data analysis described in the continuation plan. Existing synthetic differential-expression tables are demonstration outputs, not biological findings.
+
+## Quick start: Python demonstration
+
+Run from the repository root:
+
 ```bash
+git clone https://github.com/rahulsarate/scRNA-seq-for-tissue-fluidity.git
+cd scRNA-seq-for-tissue-fluidity
 conda env create -f configs/conda_envs/scrna_wound_healing.yml
 conda activate scrna_wound
-```
-
-### 2. Generate Synthetic Data (for testing)
-```bash
 python scripts/python/generate_synthetic_data.py
-```
-
-### 3. Run Analysis Pipeline
-```bash
 python scripts/python/01_scrna_analysis_pipeline.py
-```
-
-### 4. Generate Visualizations
-```bash
 python scripts/python/02_visualization_suite.py
 ```
 
-### 5. Explore Real Data
+Alternatively, install [requirements.txt](requirements.txt) in an isolated Python environment. These are the repository's demonstration entry points; dependency versions are not fully pinned, so a fresh environment requires validation.
+
+The main Python loader reads from `data/synthetic/`. Downloading GEO data does **not** automatically switch this workflow to real data.
+
+Expected output locations:
+
+| Location | Contents |
+| --- | --- |
+| `analysis/figures/` | QC, UMAP, marker, and gene-score figures |
+| `analysis/de/` | Exploratory marker and condition-comparison tables |
+| `analysis/clustering/` | Processed AnnData object, UMAP coordinates, and cell metadata |
+
+For the interactive interface, follow the separate [dashboard setup guide](dashboard/README.md). Confirm which input dataset the dashboard has loaded before interpreting its displays.
+
+## R companion workflow
+
+The Python environment above does not install R or its packages. In an R environment with Seurat, ggplot2, dplyr, and patchwork installed, run:
+
 ```bash
-python scripts/python/00_download_geo_data.py
+Rscript scripts/R/generate_synthetic_seurat.R
+Rscript scripts/R/01_seurat_analysis.R
 ```
 
----
+The R workflow uses its own synthetic input and exports a Seurat object, tables, figures, and session information. Python and R outputs should not be assumed numerically equivalent.
 
-## Key Datasets
+## Statistical interpretation and limitations
 
-| GEO ID | Description | Relevance | Samples |
-|--------|-------------|-----------|---------|
-| **GSE234269** | Wound healing scRNA-seq (3d, 7d, 14d) | ★★★★★ | 3 |
-| **GSE159827** | Tissue mechanics in wound-induced regeneration | ★★★★★ | 1 |
-| **GSE188432** | Young vs aged wound healing scRNA-seq | ★★★★☆ | 11 |
-| **GSE203244** | Macrophage heterogeneity during wound healing | ★★★★☆ | 3 |
-| **GSE186821** | Diabetic wound immune cells | ★★★☆☆ | 8 |
-| **GSE197588** | Wound epigenetic memory in stem cells | ★★★★☆ | 310 |
+- **Biological replication:** Cells from the same animal or sample are not independent biological replicates. Current cell-level comparisons are exploratory; study-level inference requires suitable replicate-aware models.
+- **Condition versus composition:** A difference across all cells can reflect changing cell-type proportions as well as within-cell-type expression. Interpret these questions separately.
+- **Batch confounding:** Samples from different studies must not be treated as interchangeable controls without checking design and technical differences. Integration cannot establish an identifiable treatment effect when study and condition are confounded.
+- **Expression scale:** Verify the expression matrix and `use_raw` behaviour before interpreting differential expression or scores. The Python script saves counts into `adata.raw` before normalisation, and downstream Scanpy defaults need review before quantitative inference.
+- **Annotation:** Marker-score assignments are provisional and need biological review. Synthetic ground-truth labels are not externally validated real-data annotations.
+- **Gene scores:** EMT and related modules are exploratory summaries, not calibrated physical measurements or validated predictive biomarkers.
+- **Reporting:** Real experimental conclusions should include biological sample counts, effect sizes, uncertainty, multiple-testing correction, and sensitivity to analysis choices.
 
----
+## Connection to imaging and wet-lab studies
 
-## AI Agents
+My research background includes confocal and intravital microscopy, lineage tracing, cell culture/organoids, and animal models. That experimental perspective motivates the biological questions in this project.
 
-This project uses **10 specialized AI agents** defined in `.github/agents/` (VS Code native) with backups in `.agent_config/agents/`:
+A future multimodal study could compare transcriptomic programmes with measured migration, cell shape, or tissue organisation. Such analysis would require matched sample identifiers, validated image measurements, and an appropriate experimental design. **No completed image-analysis or multimodal validation workflow is claimed here.**
 
-| Agent | Role | Invoke in VS Code |
-|-------|------|--------------------|
-| `orchestrator` | Route tasks to the right agent | `@orchestrator plan full analysis` |
-| `qc-analyst` | Cell filtering, doublet removal, SoupX | `@qc-analyst run QC on synthetic data` |
-| `scrna-analyst` | Clustering, annotation, trajectory | `@scrna-analyst cluster and annotate` |
-| `de-analyst` | Pseudobulk DESeq2, MAST, FindMarkers | `@de-analyst run DE wound_7d vs control` |
-| `pathway-explorer` | GO, KEGG, GSEA, decoupleR | `@pathway-explorer GO enrichment on DE results` |
-| `visualization-specialist` | UMAP, volcano, heatmap, dot plots | `@visualization-specialist create Figure 1` |
-| `data-wrangler` | Import GEO data, merge samples | `@data-wrangler download GSE234269` |
-| `pipeline-builder` | Snakemake/Nextflow workflows | `@pipeline-builder create Snakemake pipeline` |
-| `report-writer` | Methods sections, Quarto reports | `@report-writer write methods section` |
-| `reviewer` | Statistical & reproducibility review | `@reviewer validate DE results` |
+## Repository guide
 
-> **New to agents?** See [docs/USAGE_GUIDE.md](docs/USAGE_GUIDE.md) for a complete walkthrough.
+| Path | Purpose |
+| --- | --- |
+| [scripts/python/](scripts/python/) | Synthetic data, import utilities, analysis, and visualisation |
+| [scripts/R/](scripts/R/) | Synthetic-data generator and Seurat analysis |
+| [configs/](configs/) | Environment and analysis configuration files; check each script for parameters it actually uses |
+| [data/metadata/](data/metadata/) | Experimental metadata |
+| [data/references/](data/references/) | Candidate dataset catalogue; verify metadata against source records before use |
+| [analysis/](analysis/) | Checked-in example outputs |
+| [dashboard/](dashboard/) | Interactive React/FastAPI interface |
+| [docs/USAGE_GUIDE.md](docs/USAGE_GUIDE.md) | Development and agent-assisted workflow guide |
+| [docs/CONTINUATION_PLAN.md](docs/CONTINUATION_PLAN.md) | Historical progress record and planned work |
+| [docs/research-paradigms/](docs/research-paradigms/) | Research proposals, not completed results |
 
----
+This repository stays focused on wound-healing scRNA-seq. The separate TCGA pathology/NLP project is described in the [repository handoff note](docs/REPO_SPLIT_AND_HANDOFF.md).
 
-## Tissue Fluidity Gene Signatures
+## Research context and reuse
 
-| Category | Genes | Role |
-|----------|-------|------|
-| **EMT** | Vim, Cdh1/2, Snai1/2, Twist1, Zeb1/2 | Epithelial-mesenchymal transition |
-| **ECM remodeling** | Fn1, Col1a1/3a1, Mmp2/9/14, Lox | Matrix dynamics |
-| **Cell migration** | Rac1, Cdc42, RhoA, Itgb1 | Motility machinery |
-| **Mechanotransduction** | Yap1, Wwtr1/TAZ, Piezo1, Trpv4 | Force sensing |
-| **Wound signals** | Tgfb1/2/3, Pdgfa, Vegfa, Wnt5a | Repair signals |
+The repository includes the paper *Dynamic regulation of tissue fluidity controls skin repair during wound healing* as scientific background. This portfolio workflow should not be assumed to reproduce the publication's analysis or establish its findings.
 
----
-
-## New Research Paradigms
-
-See [docs/research-paradigms/new_research_paradigms.md](docs/research-paradigms/new_research_paradigms.md) for 8 proposed paradigms:
-
-1. **Mechano-Transcriptomics** — Forces → gene expression at single-cell resolution
-2. **Fluidity-Guided Therapy** — Drug targets modulating tissue stiffness
-3. **Temporal Cell State Atlas** — 12+ timepoint scRNA-seq wound atlas
-4. **Spatial Fluidity Mapping** — Visium/MERFISH fluidity gradients
-5. **Predictive Healing Models** — ML from early gene signatures
-6. **Cross-Tissue Fluidity** — Compare skin, gut, liver, lung repair
-7. **Epigenetic Fluidity Memory** — Chromatin-level wound memory
-8. **Single-Cell Mechanical Phenotyping** — Stiffness + transcriptome
-
----
-
-## CI/CD & Automation
-
-| Workflow | Trigger | What It Does |
-|----------|---------|-------|
-| `lint.yml` | Push/PR to main | Runs flake8 (Python) + lintr (R) |
-| `smoke-test.yml` | Push/PR when scripts change | Generates small synthetic dataset, validates output |
-
-Run locally:
-```bash
-# Lint Python
-flake8 scripts/python/ --max-line-length=120
-# Run smoke test
-python scripts/python/generate_synthetic_data.py
-```
-
----
-
-## References
-
-1. Sarate RM et al. "Dynamic regulation of tissue fluidity controls skin repair during wound healing"
-2. Love MI et al. (2014) DESeq2. *Genome Biology*
-3. Stuart T et al. (2019) Comprehensive Integration of Single-Cell Data. *Cell*
-4. Wolf FA et al. (2018) Scanpy. *Genome Biology*
-5. Bergen V et al. (2020) RNA velocity. *Nature Biotechnology*
-
----
-
-## License
-
-Analysis scripts: MIT License  
-Data: Subject to GEO terms and original publication restrictions.
+The earlier README described analysis scripts as MIT-licensed, but this checkout has no standalone LICENSE file. Confirm reuse terms with the repository owner. External data and publications remain subject to their original terms.
